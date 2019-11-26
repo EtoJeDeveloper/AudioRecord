@@ -8,20 +8,23 @@ import android.os.Build
 import android.util.Log
 import java.io.IOException
 
-class Buttons(output: String?,
-              private var mediaRecorder: MediaRecorder? = null,
-              private var state: Boolean = false,
-              private var recordingStopped: Boolean = false
+class Buttons(
+    output: String,
+    private var mediaRecorder: MediaRecorder? = null,
+    private var state: Boolean = false,
+    private var recordingStopped: Boolean = false
 ) : ButtonsInterface {
 
     init {
         mediaRecorder = MediaRecorder()
-        Log.d("RECV", output.toString())
+        Log.d("RECV", output)
 
         mediaRecorder?.setAudioSource(MediaRecorder.AudioSource.MIC)
         mediaRecorder?.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
         mediaRecorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-        mediaRecorder?.setOutputFile(output)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            mediaRecorder?.setOutputFile(output)
+        }
     }
 
     override fun startRecording() {
