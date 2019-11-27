@@ -3,28 +3,30 @@ package android.bignerdranch.audiorecord.activity
 import android.Manifest
 import android.bignerdranch.audiorecord.R
 import android.bignerdranch.audiorecord.implementation.Buttons
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_record.*
+import java.io.File
 
-private var count: Int = 0
+
 
 class Record : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_record)
 
-        val button = Buttons(output = filesDir.absolutePath + "/record$count.mp3")
+
+        val button = Buttons()
 
         checkPermission()
 
         button_start_recording.setOnClickListener {
             checkPermission()
 
-            count++
             button.startRecording()
         }
 

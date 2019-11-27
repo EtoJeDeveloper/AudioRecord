@@ -1,34 +1,25 @@
 package android.bignerdranch.audiorecord.implementation
 
-import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.bignerdranch.audiorecord.interfaces.ButtonsInterface
 import android.media.MediaRecorder
 import android.os.Build
-import android.util.Log
 import java.io.IOException
 
 class Buttons(
-    output: String,
-    private var mediaRecorder: MediaRecorder? = null,
     private var state: Boolean = false,
+    private var mediaRecorder: MediaRecorder? = null,
     private var recordingStopped: Boolean = false
-) : ButtonsInterface {
+) : ButtonsInterface{
+
 
     init {
-        mediaRecorder = MediaRecorder()
-        Log.d("RECV", output)
-
-        mediaRecorder?.setAudioSource(MediaRecorder.AudioSource.MIC)
-        mediaRecorder?.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
-        mediaRecorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mediaRecorder?.setOutputFile(output)
-        }
+        mediaRecorder = MediaRecorderSettings().settings()
     }
 
     override fun startRecording() {
         try {
+            println("Record started")
             mediaRecorder?.prepare()
             mediaRecorder?.start()
             state = true
@@ -39,7 +30,6 @@ class Buttons(
         }
     }
 
-    @SuppressLint("RestrictedApi", "SetTextI18n")
     @TargetApi(Build.VERSION_CODES.N)
     override fun pauseRecording() {
         if (state) {
@@ -52,7 +42,6 @@ class Buttons(
         }
     }
 
-    @SuppressLint("RestrictedApi", "SetTextI18n")
     @TargetApi(Build.VERSION_CODES.N)
     override fun resumeRecording() {
         mediaRecorder?.resume()
@@ -61,9 +50,13 @@ class Buttons(
 
     override fun stopRecording() {
         if (state) {
+            println("Record did stop")
             mediaRecorder?.stop()
+            mediaRecorder?.reset()
             mediaRecorder?.release()
+            mediaRecorder = MediaRecorderSettings().settings()
             state = false
+
         }
     }
 }
