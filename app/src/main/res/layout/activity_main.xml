@@ -10,6 +10,8 @@
         android:id="@+id/newActivityButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/textColor"
         android:text="@string/name_button_record"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

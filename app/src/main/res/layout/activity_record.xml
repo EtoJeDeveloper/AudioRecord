@@ -1,48 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    tools:context=".activity.MainActivity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.MainActivity"
+    android:background="@color/colorDracula">
 
     <TextView
         android:id="@+id/textview_sound_recorder_heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sound_recorder"
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:textColor="#000"
+        android:textColor="@color/textColor"
         android:layout_marginTop="32dp"
         />
 
-    <Button
-        android:id="@+id/button_start_recording"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/start"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="32dp"
-        android:layout_marginBottom="32dp"
-        android:layout_centerVertical="true"/>
+    <FrameLayout
+        android:id="@+id/wave"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:layout_weight="1"
+        android:background="@color/colorDracula">
 
-    <Button
-        android:id="@+id/button_pause_recording"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pause"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="32dp"/>
+        <SurfaceView
+            android:id="@+id/sv_wave"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp" />
+    </FrameLayout>
 
-    <Button
-        android:id="@+id/button_stop_recording"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/stop"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="32dp"/>
-</RelativeLayout>
+        android:layout_gravity="bottom"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_start_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:text="@string/start"
+            android:textColor="@color/textColor"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button_pause_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:text="@string/pause"
+            android:textColor="@color/textColor"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button_stop_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:text="@string/stop"
+            android:textColor="@color/textColor"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

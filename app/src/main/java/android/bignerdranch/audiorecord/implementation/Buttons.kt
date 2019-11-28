@@ -12,7 +12,6 @@ class Buttons(
     private var recordingStopped: Boolean = false
 ) : ButtonsInterface{
 
-
     init {
         mediaRecorder = MediaRecorderSettings().settings()
     }
