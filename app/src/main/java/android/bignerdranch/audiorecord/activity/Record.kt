@@ -5,6 +5,7 @@ import android.bignerdranch.audiorecord.R
 import android.bignerdranch.audiorecord.implementation.Buttons
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.SurfaceView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -12,13 +13,13 @@ import kotlinx.android.synthetic.main.activity_record.*
 
 
 class Record : AppCompatActivity() {
+    private val svWave by lazy { findViewById<SurfaceView>(R.id.sv_wave) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_record)
 
-
-        val button = Buttons()
+        val button = Buttons(svWave = svWave, context = this)
 
         checkPermission()
 
@@ -26,7 +27,6 @@ class Record : AppCompatActivity() {
             checkPermission()
 
             button.startRecording()
-
         }
 
         button_stop_recording.setOnClickListener {
