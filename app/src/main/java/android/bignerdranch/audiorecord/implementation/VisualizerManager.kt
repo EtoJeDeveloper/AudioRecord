@@ -5,7 +5,6 @@ import android.graphics.Paint
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
-import android.util.Log
 import android.view.animation.LinearInterpolator
 import me.bogerchan.niervisualizer.NierVisualizerManager
 import me.bogerchan.niervisualizer.renderer.IRenderer
@@ -28,8 +27,9 @@ class VisualizerManager {
         const val STATUS_AUDIO_RECORD = 1
         const val STATUS_MEDIA_PLAYER = 2
 
-        const val STATE_PLAYING = 0
-        const val STATE_STOP = 2
+        const val STATE_STOP = 0
+        const val STATE_PAUSE = 1
+        const val STATE_RECORDING = 2
 
 
         const val SAMPLING_RATE = 44100

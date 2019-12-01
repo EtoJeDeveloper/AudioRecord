@@ -44,7 +44,7 @@
 
         <Button
             android:id="@+id/button_start_recording"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="10dp"
@@ -52,25 +52,43 @@
             android:textColor="@color/textColor"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/button_pause_recording"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="10dp"
-            android:text="@string/pause"
-            android:textColor="@color/textColor"
-            android:textStyle="bold" />
+            android:layout_margin="5dp"
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/button_resume_recording"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/resume"
+                android:textColor="@color/textColor"
+                android:textStyle="bold"
+                android:visibility="invisible" />
+
+            <Button
+                android:id="@+id/button_pause_recording"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pause"
+                android:textColor="@color/textColor"
+                android:textStyle="bold"
+                android:enabled="false"/>
+
+        </RelativeLayout>
 
         <Button
             android:id="@+id/button_stop_recording"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="10dp"
             android:text="@string/stop"
             android:textColor="@color/textColor"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:enabled="false"/>
     </LinearLayout>
-
 </LinearLayout>

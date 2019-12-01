@@ -6,14 +6,11 @@ import android.content.Context
 import android.graphics.PixelFormat
 import android.media.MediaRecorder
 import android.os.Build
-import android.util.Log
 import android.view.SurfaceView
 import java.io.IOException
 
 class Buttons(
-    private var state: Boolean = false,
     private var mediaRecorder: MediaRecorder? = null,
-    private var recordingStopped: Boolean = false,
     private var mAudioRecordState: Int = VisualizerManager.STATE_STOP,
     private var visualizerManager: VisualizerManager = VisualizerManager(),
     private var svWave: SurfaceView,
@@ -24,6 +21,7 @@ class Buttons(
         mediaRecorder = MediaRecorderSettings().settings(context = context)
         svWave.setZOrderOnTop(true)
         svWave.holder.setFormat(PixelFormat.TRANSLUCENT)
+        visualizerManager.mStatus = VisualizerManager.STATUS_AUDIO_RECORD
     }
 
     override fun startRecording() {
@@ -33,21 +31,17 @@ class Buttons(
                     VisualizerManager.STATE_STOP -> {
                         startRecording()
                         println("Record started")
+
+                        visualizerManager.createNewVisualizerManager()
+                        visualizerManager.mVisualizerManager?.start(svWave, visualizerManager.mRenderers[4 % visualizerManager.mRenderers.size])
+
                         mediaRecorder?.prepare()
                         mediaRecorder?.start()
-                        mAudioRecordState = VisualizerManager.STATE_PLAYING
-                        if(visualizerManager.mStatus == VisualizerManager.STATUS_MEDIA_PLAYER || visualizerManager.mStatus == VisualizerManager.STATUS_UNKNOWN) {
-                            visualizerManager.mStatus = VisualizerManager.STATUS_AUDIO_RECORD
-                            Log.d("WHY", VisualizerManager.STATUS_AUDIO_RECORD.toString())
-                            println(visualizerManager.mStatus.toString())
-                            visualizerManager.createNewVisualizerManager()
-                        }
 
-                        visualizerManager.mVisualizerManager?.start(svWave, visualizerManager.mRenderers[4 % visualizerManager.mRenderers.size])
+                        mAudioRecordState = VisualizerManager.STATE_RECORDING
                     }
                 }
             }
-
         } catch (e: IllegalStateException) {
             e.printStackTrace()
         } catch (e: IOException) {
@@ -57,31 +51,50 @@ class Buttons(
 
     @TargetApi(Build.VERSION_CODES.N)
     override fun pauseRecording() {
-        if (state) {
-            if (!recordingStopped) {
-                mediaRecorder?.pause()
-                recordingStopped = true
-            } else {
-                resumeRecording()
+        visualizerManager.mAudioRecord.apply {
+            when(mAudioRecordState) {
+                VisualizerManager.STATE_RECORDING -> {
+                    stop()
+                    println("Record stopped")
+
+                    visualizerManager.mVisualizerManager?.stop()
+                    mediaRecorder?.pause()
+
+                    mAudioRecordState = VisualizerManager.STATE_PAUSE
+                }
             }
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.N)
     override fun resumeRecording() {
-        mediaRecorder?.resume()
-        recordingStopped = false
+        visualizerManager.mAudioRecord.apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                mediaRecorder?.resume()
+            }
+            startRecording()
+
+            visualizerManager.mVisualizerManager?.start(svWave, visualizerManager.mRenderers[4 % visualizerManager.mRenderers.size])
+
+            mAudioRecordState = VisualizerManager.STATE_RECORDING
+        }
     }
 
     override fun stopRecording() {
-        if (state) {
-            println("Record did stop")
+        visualizerManager.mAudioRecord.apply {
+            stop()
+            println("Record stopped")
+
+            //обход особенностей фреймвора. см. fun pauseRecording
+            startRecording()
+            visualizerManager.mVisualizerManager?.start(svWave, visualizerManager.mRenderers[4 % visualizerManager.mRenderers.size])
+            stop()
+            visualizerManager.mVisualizerManager?.stop()
+
             mediaRecorder?.stop()
-            mediaRecorder?.reset()
             mediaRecorder?.release()
             mediaRecorder = MediaRecorderSettings().settings(context)
-            state = false
 
+            mAudioRecordState = VisualizerManager.STATE_STOP
         }
     }
 }
