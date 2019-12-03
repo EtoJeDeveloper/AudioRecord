@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_record.*
 
 
-class Record : AppCompatActivity() {
+class RecordActivity : AppCompatActivity() {
     private val svWave by lazy { findViewById<SurfaceView>(R.id.sv_wave) }
 
     override fun onCreate(savedInstanceState: Bundle?) {

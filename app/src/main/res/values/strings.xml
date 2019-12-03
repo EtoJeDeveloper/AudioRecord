@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">AudioRecord</string>
-    <string name="name_button_record">Осуществить запись голоса</string>
+    <string name="name_button_record">Sound recording</string>
     <string name="sound_recorder">Sound Recorder</string>
     <string name="start">Start</string>
     <string name="pause">Pause</string>
     <string name="stop">Stop</string>
     <string name="resume">resume</string>
+    <string name="open_audio_list">Open audio list</string>
 </resources>

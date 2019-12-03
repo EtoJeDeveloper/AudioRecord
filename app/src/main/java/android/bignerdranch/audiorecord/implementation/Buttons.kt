@@ -33,7 +33,7 @@ class Buttons(
                         println("Record started")
 
                         visualizerManager.createNewVisualizerManager()
-                        visualizerManager.mVisualizerManager?.start(svWave, visualizerManager.mRenderers[4 % visualizerManager.mRenderers.size])
+                        visualizerManager.mVisualizerManager?.start(svWave, visualizerManager.mRenderers[8 % visualizerManager.mRenderers.size])
 
                         mediaRecorder?.prepare()
                         mediaRecorder?.start()
@@ -73,7 +73,7 @@ class Buttons(
             }
             startRecording()
 
-            visualizerManager.mVisualizerManager?.start(svWave, visualizerManager.mRenderers[4 % visualizerManager.mRenderers.size])
+            visualizerManager.mVisualizerManager?.start(svWave, visualizerManager.mRenderers[8 % visualizerManager.mRenderers.size])
 
             mAudioRecordState = VisualizerManager.STATE_RECORDING
         }
@@ -86,7 +86,7 @@ class Buttons(
 
             //обход особенностей фреймвора. см. fun pauseRecording
             startRecording()
-            visualizerManager.mVisualizerManager?.start(svWave, visualizerManager.mRenderers[4 % visualizerManager.mRenderers.size])
+            visualizerManager.mVisualizerManager?.start(svWave, visualizerManager.mRenderers[8 % visualizerManager.mRenderers.size])
             stop()
             visualizerManager.mVisualizerManager?.stop()
 

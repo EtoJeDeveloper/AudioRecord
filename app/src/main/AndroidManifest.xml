@@ -3,12 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="android.bignerdranch.audiorecord">
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
-
-<!--   // <dist:module dist:instant="true" />-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -17,9 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/external_files" />
 
-        <activity android:name=".activity.Record" />
-
+        <activity android:name=".activity.AudioListActivity" />
+        <activity android:name=".activity.RecordActivity" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +28,15 @@
             </intent-filter>
         </activity>
 
+        <provider
+            android:authorities="android.bignerdranch.audiorecord"
+            android:name=".fileSystems.GenericFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/external_files"/>
+        </provider>
     </application>
 
 </manifest>
